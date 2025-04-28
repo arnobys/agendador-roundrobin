@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendar Reunión</title>
+  <script>
+    async function enviarFormulario(event) {
+      event.preventDefault();
+      const data = {
+        nombre: document.getElementById('nombre').value,
+        email: document.getElementById('email').value,
+        telefono: document.getElementById('telefono').value,
+        motivo: document.getElementById('motivo').value,
+        mensaje: document.getElementById('mensaje').value
+      };
+      const response = await fetch('/agendar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await response.json();
+      alert(result.mensaje);
+    }
+  </script>
+</head>
+<body>
+  <h1>Agenda tu Reunión</h1>
+  <form onsubmit="enviarFormulario(event)">
+    <input id="nombre" placeholder="Nombre" required><br><br>
+    <input id="email" type="email" placeholder="Email" required><br><br>
+    <input id="telefono" placeholder="Teléfono" required><br><br>
+    <input id="motivo" placeholder="Motivo de reunión" required><br><br>
+    <textarea id="mensaje" placeholder="Mensaje adicional"></textarea><br><br>
+    <button type="submit">Agendar</button>
+  </form>
+</body>
+</html>
